@@ -47,5 +47,6 @@ async def analytics(request: Request):
             "breaches": int(np.sum(latencies > threshold_ms))
         }
     
+    
     return results
 
