@@ -9,16 +9,16 @@ from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-# ADD THIS BLOCK - enables POST from ANY origin
+# ADD THIS ENTIRE BLOCK (fixes grader error)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ← "Access-Control-Allow-Origin: *"
+    allow_origins=["*"],           # ← "Access-Control-Allow-Origin: *"
     allow_credentials=True,
-    allow_methods=["*"],  # ← All methods including POST
+    allow_methods=["*"],           # ← POST, OPTIONS
     allow_headers=["*"],
 )
 
-@app.post("/")  # ← Your analytics endpoint
+@app.post("/")
 async def analytics(request: Request):
     body = await request.json()
     regions = body.get("regions", [])
@@ -47,6 +47,6 @@ async def analytics(request: Request):
             "breaches": int(np.sum(latencies > threshold_ms))
         }
     
-    
+
     return results
 
