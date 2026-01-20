@@ -1,18 +1,9 @@
 from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
 import numpy as np
 
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI()  # No CORS middleware here
 
 @app.post("/")
 async def analytics(request: Request):
@@ -20,7 +11,6 @@ async def analytics(request: Request):
     regions = body.get("regions", [])
     threshold_ms = body.get("threshold_ms", 0)
     
-    # Load data (your q-vercel-latency.json via env var or fallback)
     data_str = os.environ.get('TELEMETRY_DATA', '[]')
     data = json.loads(data_str)
     
@@ -38,5 +28,4 @@ async def analytics(request: Request):
         }
     
     return results
-
 
