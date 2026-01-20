@@ -18,7 +18,7 @@ async def analytics(request: Request):
     for region in regions:
         region_data = [r for r in data if r.get('region') == region]
         latencies = np.array([r.get('latency_ms', 0) for r in region_data])
-        uptimes = [r.get('uptime', 0) for r in region_data])
+        uptimes = [r.get('uptime', 0) for r in region_data]  # ← FIXED
         
         results[region] = {
             "avg_latency": float(np.mean(latencies)) if len(latencies) > 0 else 0,
@@ -28,5 +28,6 @@ async def analytics(request: Request):
         }
     
     return results
+
 
 
