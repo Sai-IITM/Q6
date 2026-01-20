@@ -5,18 +5,20 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+
+
 app = FastAPI()
 
-# Enable CORS for POST from any origin
+# ADD THIS BLOCK - enables POST from ANY origin
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # ← "Access-Control-Allow-Origin: *"
     allow_credentials=True,
-    allow_methods=["POST"],
-    allow_headers=["*"], 
+    allow_methods=["*"],  # ← All methods including POST
+    allow_headers=["*"],
 )
 
-@app.post("/")
+@app.post("/")  # ← Your analytics endpoint
 async def analytics(request: Request):
     body = await request.json()
     regions = body.get("regions", [])
