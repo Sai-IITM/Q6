@@ -3,7 +3,7 @@ import json
 import os
 import numpy as np
 
-app = FastAPI()  # No CORS middleware here
+app = FastAPI()
 
 @app.post("/")
 async def analytics(request: Request):
@@ -18,7 +18,7 @@ async def analytics(request: Request):
     for region in regions:
         region_data = [r for r in data if r.get('region') == region]
         latencies = np.array([r.get('latency_ms', 0) for r in region_data])
-        uptimes = [r.get('uptime', 0) for r in region_data]
+        uptimes = [r.get('uptime', 0) for r in region_data])
         
         results[region] = {
             "avg_latency": float(np.mean(latencies)) if len(latencies) > 0 else 0,
@@ -28,4 +28,5 @@ async def analytics(request: Request):
         }
     
     return results
+
 
